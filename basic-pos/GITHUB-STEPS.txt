@@ -1,0 +1,26 @@
+HOW TO UPLOAD THE FINISHED PROJECT TO GITHUB
+
+After CREATE-PROJECT.bat successfully creates basic-pos-system:
+
+1. Sign in to https://github.com.
+2. Click the plus sign (+), then click New repository.
+3. Enter basic-pos-system as the repository name.
+4. Do not add a README, .gitignore, or license on GitHub because the project
+   already has these files.
+5. Create the repository.
+6. Open Command Prompt inside the finished basic-pos-system folder.
+7. Run the commands shown by GitHub under "push an existing repository."
+
+Typical commands are:
+
+    git init
+    git add .
+    git commit -m "Create basic POS system"
+    git branch -M main
+    git remote add origin YOUR_GITHUB_REPOSITORY_URL
+    git push -u origin main
+
+Replace YOUR_GITHUB_REPOSITORY_URL with the URL shown on your GitHub page.
+
+The vendor folder and private .env file will not be uploaded because the
+CodeIgniter .gitignore file excludes them.
