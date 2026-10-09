@@ -1,0 +1,72 @@
+@echo off
+setlocal
+title Technical Summative 2 Setup
+cd /d "%~dp0"
+
+echo.
+echo ========================================
+echo   TECHNICAL SUMMATIVE 2 - ONE-TIME SETUP
+echo ========================================
+echo.
+
+where php >nul 2>nul
+if errorlevel 1 (
+  echo PHP was not found. Start with XAMPP and add C:\xampp\php to PATH.
+  pause
+  exit /b 1
+)
+
+where composer >nul 2>nul
+if errorlevel 1 (
+  echo Composer was not found. Install it from https://getcomposer.org/
+  pause
+  exit /b 1
+)
+
+if not exist "_runtime\vendor\autoload.php" (
+  echo [1/4] Downloading CodeIgniter...
+  composer create-project codeigniter4/appstarter "_runtime" "4.7.4" --no-interaction
+  if errorlevel 1 goto :failed
+) else (
+  echo [1/4] CodeIgniter is already installed.
+)
+
+echo [2/4] Copying the project files...
+robocopy "app" "_runtime\app" /E /NFL /NDL /NJH /NJS /NP >nul
+if errorlevel 8 goto :failed
+robocopy "public" "_runtime\public" /E /NFL /NDL /NJH /NJS /NP >nul
+if errorlevel 8 goto :failed
+copy /Y ".env.example" "_runtime\.env" >nul
+if not exist "_runtime\app\Controllers\Tasks.php" goto :failed
+
+echo [3/4] Creating the TasksToday database...
+if exist "C:\xampp\mysql\bin\mysql.exe" (
+  "C:\xampp\mysql\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS TasksToday CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+) else (
+  mysql -u root -e "CREATE DATABASE IF NOT EXISTS TasksToday CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" 2>nul
+)
+
+echo [4/4] Building tables and sample data...
+pushd "_runtime"
+php spark migrate --all
+if errorlevel 1 (
+  popd
+  echo.
+  echo Could not connect to MySQL. Create TasksToday in phpMyAdmin,
+  echo import database\TasksToday.sql, then run SETUP.bat again.
+  pause
+  exit /b 1
+)
+php spark db:seed DemoSeeder
+popd
+
+echo.
+echo Setup complete! Double-click START.bat.
+pause
+exit /b 0
+
+:failed
+echo.
+echo Setup stopped. Check your internet connection and Composer installation.
+pause
+exit /b 1
