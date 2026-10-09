@@ -1,1 +1,0 @@
-# IT0049Technicals
