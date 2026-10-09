@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Default pink avatar">
+  <rect width="320" height="320" rx="160" fill="#fff2f6"/>
+  <circle cx="160" cy="125" r="54" fill="#f6c9d9"/>
+  <path d="M70 285c8-66 43-100 90-100s82 34 90 100" fill="#edbfd1"/>
+  <path d="M121 66c12-25 35-31 39-3 4-28 27-22 39 3-17 8-30 18-39 31-9-13-22-23-39-31Z" fill="#c96b91"/>
+  <circle cx="160" cy="160" r="151" fill="none" stroke="#edbfd1" stroke-width="8" stroke-dasharray="3 14"/>
+</svg>
