@@ -1,0 +1,6 @@
+_runtime/
+public/uploads/products/*
+!public/uploads/products/.gitkeep
+public/uploads/staff/*
+!public/uploads/staff/.gitkeep
+.DS_Store
